@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-md-10">
+		<label>Search by category: 
+			<select name="" id="" ng-model='categorySearch'>
+	      <option value="">all</option>
+	      <option value="dark">dark</option>
+	      <option value="cold">cold</option>
+	      <option value="awesome">awesome</option>
+	      <option value="dry">dry</option>
+	      <option value="hot">hot</option>
+	      <option value="summer">summer</option>
+	      <option value="lucid">lucid</option>
+	      <option value="warm">warm</option>
+	      <option value="winter">winter</option>
+	      <option value="spring">spring</option>
+    	</select>
+		</label>
+		<label>Search by name: 
+		<input ng-model="name" type="text">
+		</label>
+		<label>Price:
+			<select ng-model="teaPrice" ng-init="teaPrice = 'price'" >
+      	<option value="price">lowest</option>
+      	<option value="-price">highest</option>
+    	</select>
+  	</label>
+	</div>
+	<div class="col-md-2">
+		<a class ="cart" href="/cart">
+  		<button class="btn btn-danger">
+  			<i class="fa fa-shopping-cart"></i>
+  			{{teasInCart > 0 ? 'Cart (' + teasInCart + ')' : 'Cart Empty'}}
+  		</button>
+  	</a>
+	</div>
+</div>
+	<div class="space"></div>
+	<table>
+	  <tr class='table-head'>
+	    <th>Tea</th>
+	    <th>Product Information</th>
+	    <th>Price</th>
+	    <th>Quantity</th>
+	    <th> </th>
+	  </tr>
+		<tr ng-repeat = "tea in teaData | filter: {categories: categorySearch} | filter:name | orderBy: teaPrice">
+			<td ng-init='caffeineAmount(tea);'><img src="{{tea.imageUrl}}"></td>
+			<td><h3>{{tea.name}}</h3>
+				<p><strong>Ingredients:</strong> {{tea.ingredients}}</p>
+				<p><strong>Rating:</strong> {{tea.rating}}</p>
+				<p><strong>In Stock?:</strong> {{tea.inStock}}</p>
+				<p>
+					<strong>Categories:</strong>
+					<ul ng-repeat='category in tea.categories'>
+          	<li>{{category}}</li>
+        	</ul>
+        </p>
+			</td>
+			<td><p>{{tea.price/100 | currency}}</p></td>
+			<td> 
+				<select ng-model="quantity">
+					<option value="1">1</option>
+		      <option value="2">2</option>
+		      <option value="3">3</option>
+		      <option value="4">4</option>
+		      <option value="5">5</option>
+    		</select>
+    	</td>
+			<td>
+				<button class="btn btn-warning" ng-click='addToCart(tea, quantity)'>Add to Cart</button>
+				<p></p>
+				<p></p>
+				<p><strong>Caffeine</strong></p>
+				<p>mg/serving: {{tea.caffeineScale}}</p>
+				<p>Rating: {{level}}</p>
+				<caffeinemeter caffeine-mg='caffeine'></caffeinemeter>
+			</td>
+	</tr>
+</table>

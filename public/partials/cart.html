@@ -1,0 +1,36 @@
+	<h1>Cart</h1>
+	<div class="space"></div>
+	<table>
+	  <tr class='table-head'>
+	    <th>Tea</th>
+	    <th>Product Information</th>
+	    <th>Quantity</th>
+	    <th>Subtotal</th>
+	    <th></th>
+	  </tr>
+		<tr ng-repeat = "contents in shoppingCart">
+			<td><img src="{{contents.tea.imageUrl}}"></td>
+			<td><h3>{{contents.tea.name}}</h3>
+				<p><strong>Caffeine Scale:</strong> {{contents.tea.caffeineScale}}</p>
+				<p><strong>Ingredients:</strong> {{contents.tea.ingredients}}</p>
+				<p><strong>Rating:</strong> {{contents.tea.rating}}</p>
+				<p><strong>In Stock?:</strong> {{contents.tea.inStock}}</p>
+			</td>
+			<td ng-hide="edit">{{contents.amount}}</td>
+			<td ng-show="edit"> 
+					<select ng-model="this.contents.amount">
+						<option value="1">1</option>
+			      <option value="2">2</option>
+			      <option value="3">3</option>
+			      <option value="4">4</option>
+			      <option value="5">5</option>
+	    		</select>
+    	</td>
+    	<td><p>{{contents.tea.price/100 * contents.amount | currency}}</p></td>
+			<td>
+				<button class="btn btn-warning cart-button1" ng-click='editCart()'>Edit</button>
+				<p></p>
+				<button class="btn btn-warning cart-button2" ng-click='removeFromCart(this.contents)'>Remove</button>
+			</td>
+	</tr>
+</table>
